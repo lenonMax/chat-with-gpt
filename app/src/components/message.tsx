@@ -248,10 +248,10 @@ export default function MessageComponent(props: { message: Message, last: boolea
                             </strong>
                             {props.message.role === 'assistant' && props.last && !props.message.done && <InlineLoader />}
                         </span>
-                        <TTSButton id={props.message.id}
+                        { props.message.role !== 'user' && (<TTSButton id={props.message.id}
                             selector={'.content-' + props.message.id}
                             complete={!!props.message.done}
-                            autoplay={props.last && context.chat.lastReplyID === props.message.id} />
+                            autoplay={props.last && context.chat.lastReplyID === props.message.id} />)}
                         <div style={{ flexGrow: 1 }} />
                         <CopyButton value={props.message.content}>
                             {({ copy, copied }) => (

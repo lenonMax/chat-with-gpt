@@ -82,6 +82,16 @@ export default function MessageInput(props: MessageInputProps) {
                 navigate('/chat/' + id);
             }
             dispatch(setMessage(''));
+            // Stop the recording flow every time
+            if (useOpenAIWhisper || !supportsSpeechRecognition) {
+                await stopRecording();
+                setTimeout(() => setRecording(false), 500);
+            } else if (speechRecognition) {
+                speechRecognition.stop();
+                setRecording(false);
+            } else {
+                onSpeechError(new Error('not supported'));
+            }
         }
     }, [context, message, dispatch, navigate]);
 
@@ -190,6 +200,14 @@ export default function MessageInput(props: MessageInputProps) {
     useHotkeys([
         ['n', () => document.querySelector<HTMLTextAreaElement>('#message-input')?.focus()]
     ]);
+    useHotkeys([
+        ['v', () => {
+            if(!context.generating && showMicrophoneButton){
+                document.querySelector<HTMLElement>('#microphone-button')?.click();
+            }
+        }
+        ]
+    ]);
 
     const blur = useCallback(() => {
         document.querySelector<HTMLTextAreaElement>('#message-input')?.blur();
@@ -217,10 +235,11 @@ export default function MessageInput(props: MessageInputProps) {
                     <>
                         {showMicrophoneButton && <Popover width={200} position="bottom" withArrow shadow="md" opened={speechError !== null}>
                             <Popover.Target>
-                                <ActionIcon size="xl"
+                                <ActionIcon 
+                                    size="xl"
                                     onClick={onSpeechStart}>
                                     {transcribing && <Loader size="xs" />}
-                                    {!transcribing && <i className="fa fa-microphone" style={{ fontSize: '90%', color: recording ? 'red' : 'inherit' }} />}
+                                    {!transcribing && <i id="microphone-button" className="fa fa-microphone" style={{ fontSize: '90%', color: recording ? 'red' : 'inherit' }} />}
                                 </ActionIcon>
                             </Popover.Target>
                             <Popover.Dropdown>

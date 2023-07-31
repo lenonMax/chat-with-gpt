@@ -229,28 +229,33 @@ export default function SettingsTab(props: {
 
     return (
         <Tabs.Panel value={props.name}>
-            <Settings>
-                {props.children}
-                {optionSets.map(({ name, id, description, options, resettable, collapsed }) => <>
-                    <SettingsOption heading={name} description={description} collapsed={collapsed} key={id}>
-                        {options.map(o => <PluginOptionWidget
-                            pluginID={id}
-                            option={o}
-                            chatID={context.id}
-                            context={context}
-                            key={id + "." + o.id} />)}
-                        {resettable && <div style={{
-                            display: 'flex',
-                            gap: '1rem',
-                            marginTop: '1rem',
-                        }}>
-                            <Button size="xs" compact variant="light" onClick={() => context.chat.resetPluginOptions(id, context.id)}>
-                                <FormattedMessage defaultMessage="Reset to default" />
-                            </Button>
-                        </div>}
-                    </SettingsOption>
-                </>)}
-            </Settings>
+        <Settings>
+        {props.children}
+        {optionSets.map(({ name, id, description, options, resettable, collapsed }) => (
+            <SettingsOption heading={name} description={description} collapsed={collapsed} key={id}>
+            {options.map(o => (
+                <PluginOptionWidget
+                pluginID={id}
+                option={o}
+                chatID={context.id}
+                context={context}
+                key={id + "_" + o.id} // Unique key combining 'id' and 'o.id'
+                />
+            ))}
+            {resettable && (
+                <div style={{
+                display: 'flex',
+                gap: '1rem',
+                marginTop: '1rem',
+                }}>
+                <Button size="xs" compact variant="light" onClick={() => context.chat.resetPluginOptions(id, context.id)}>
+                    <FormattedMessage defaultMessage="Reset to default" />
+                </Button>
+                </div>
+            )}
+            </SettingsOption>
+        ))}
+        </Settings>
         </Tabs.Panel>
     );
 }

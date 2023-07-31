@@ -144,7 +144,7 @@ export function useTTSPlayerState(): ITTSContext {
 const TTSContext = createContext<ITTSContext>({
     key: null,
     voice: null,
-    autoplayEnabled: false,
+    autoplayEnabled: true,
     play() {},
     pause() {},
     cancel() {},
