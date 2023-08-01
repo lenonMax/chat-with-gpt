@@ -41,13 +41,22 @@ Your API key is stored only on your device and never transmitted to anyone excep
 
 ## Running on your own computer
 
-To run on your own device, you can use Docker:
+### To run on your own device, you can use Docker:
 
 ```
 docker run -v $(pwd)/data:/app/data -p 3000:3000 ghcr.io/cogentapps/chat-with-gpt:release
 ```
 
 Then navigate to http://localhost:3000 to view the app.
+
+### run the following command to start the development server:
+```
+cd app && yarn install && yarn run start
+```
+```
+cd server && yarn install && yarn run start
+```
+Then navigate to http://localhost:5173 to view the app.
 
 ### Store your API keys on the server
 

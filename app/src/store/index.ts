@@ -9,7 +9,7 @@ import {
   REHYDRATE,
   persistReducer,
   persistStore,
-} from "redux-persist";
+} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import messageReducer from './message';
 import settingsUIReducer from './settings-ui';
@@ -19,24 +19,30 @@ import uiReducer from './ui';
 const persistConfig = {
   key: 'root',
   storage,
-}
+};
 
 const persistSidebarConfig = {
   key: 'sidebar',
   storage,
-}
+};
 
 const persistMessageConfig = {
   key: 'message',
   storage,
-}
+};
 
 const store = configureStore({
   reducer: {
-    message: persistReducer<ReturnType<typeof messageReducer>>(persistMessageConfig, messageReducer),
+    message: persistReducer<ReturnType<typeof messageReducer>>(
+      persistMessageConfig,
+      messageReducer
+    ),
     ui: uiReducer,
     settingsUI: settingsUIReducer,
-    sidebar: persistReducer<ReturnType<typeof sidebarReducer>>(persistSidebarConfig, sidebarReducer),
+    sidebar: persistReducer<ReturnType<typeof sidebarReducer>>(
+      persistSidebarConfig,
+      sidebarReducer
+    ),
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

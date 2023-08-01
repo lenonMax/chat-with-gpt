@@ -2,18 +2,18 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '.';
 
 const initialState = {
-    message: '',
+  message: '',
 };
 
 export const messageSlice = createSlice({
-    name: 'message',
-    initialState,
-    reducers: {
-        setMessage: (state, action: PayloadAction<string>) => {
-            state.message = action.payload;
-        },
+  name: 'message',
+  initialState,
+  reducers: {
+    setMessage: (state, action: PayloadAction<string>) => {
+      state.message = action.payload;
     },
-})
+  },
+});
 
 export const { setMessage } = messageSlice.actions;
 

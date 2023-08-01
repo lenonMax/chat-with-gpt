@@ -8,7 +8,7 @@ import * as hashes from 'jshashes';
  * @returns {Promise} A Promise that resolves after the specified duration.
  */
 export function sleep(ms: number): Promise<any> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 /**
@@ -20,10 +20,10 @@ export function sleep(ms: number): Promise<any> {
  * @returns {string} The ellipsized string.
  */
 export function ellipsize(text: string, maxLength: number): string {
-    if (text.length > maxLength) {
-        return text.substring(0, maxLength) + '...';
-    }
-    return text;
+  if (text.length > maxLength) {
+    return text.substring(0, maxLength) + '...';
+  }
+  return text;
 }
 
 /**
@@ -34,9 +34,9 @@ export function ellipsize(text: string, maxLength: number): string {
  * @returns {ArrayBuffer} A new ArrayBuffer containing the same binary data as the input buffer.
  */
 export function cloneArrayBuffer(buffer: ArrayBuffer): ArrayBuffer {
-    const newBuffer = new ArrayBuffer(buffer.byteLength);
-    new Uint8Array(newBuffer).set(new Uint8Array(buffer));
-    return newBuffer;
+  const newBuffer = new ArrayBuffer(buffer.byteLength);
+  new Uint8Array(newBuffer).set(new Uint8Array(buffer));
+  return newBuffer;
 }
 
 /**
@@ -72,11 +72,11 @@ export function compareUint8Array(a: Uint8Array, b: Uint8Array): number {
  * share("Hello, World!");
  */
 export async function share(text: string) {
-    if (navigator.share) {
-        await navigator.share({
-            text,
-        });
-    }
+  if (navigator.share) {
+    await navigator.share({
+      text,
+    });
+  }
 }
 
 /*
@@ -88,11 +88,11 @@ const hasher = new hashes.MD5();
 const hashCache = new Map<string, string>();
 
 export async function md5(data: string): Promise<string> {
-    if (!hashCache.has(data)) {
-        const hashHex = hasher.hex(data);
-        hashCache.set(data, hashHex);
-    }
-    return hashCache.get(data)!;
+  if (!hashCache.has(data)) {
+    const hashHex = hasher.hex(data);
+    hashCache.set(data, hashHex);
+  }
+  return hashCache.get(data)!;
 }
 
 /*
@@ -100,25 +100,25 @@ Rate limiting
 */
 
 export function getRateLimitResetTimeFromResponse(response: Response): number {
-    const now = Date.now();
-    const fallbackValue = now + 20*1000;
-    const maxValue = now + 2*60*1000;
+  const now = Date.now();
+  const fallbackValue = now + 20 * 1000;
+  const maxValue = now + 2 * 60 * 1000;
 
-    const rateLimitReset = response.headers.get("x-ratelimit-reset");
-    if (!rateLimitReset) {
-        return fallbackValue;
-    }
+  const rateLimitReset = response.headers.get('x-ratelimit-reset');
+  if (!rateLimitReset) {
+    return fallbackValue;
+  }
 
-    let resetTime = parseInt(rateLimitReset, 10);
-    if (isNaN(resetTime)) {
-        return fallbackValue;
-    }
+  let resetTime = parseInt(rateLimitReset, 10);
+  if (isNaN(resetTime)) {
+    return fallbackValue;
+  }
 
-    resetTime *= 1000;
+  resetTime *= 1000;
 
-    if (resetTime > fallbackValue) {
-        return maxValue;
-    }
+  if (resetTime > fallbackValue) {
+    return maxValue;
+  }
 
-    return resetTime;
+  return resetTime;
 }
