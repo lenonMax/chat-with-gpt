@@ -9,7 +9,7 @@ export const ttsServiceOptions: OptionGroup = {
     {
       id: 'autoplay',
       displayOnSettingsScreen: 'speech',
-      defaultValue: true,
+      defaultValue: false,
       displayAsSeparateSection: true,
       renderProps: {
         type: 'checkbox',
