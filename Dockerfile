@@ -12,7 +12,7 @@ COPY ./app/package.json ./
 COPY ./app/tsconfig.json ./
 
 # Install Node.js dependencies
-RUN yarn install
+RUN yarn install --network-timeout 1000000
 
 COPY ./app/vite.config.js ./
 
@@ -35,7 +35,7 @@ WORKDIR /app
 COPY ./server/package.json ./server/tsconfig.json ./
 
 # Install Node.js dependencies from package.json
-RUN yarn install
+RUN yarn install --network-timeout 1000000
 
 # Copy the rest of the application code into the working directory
 COPY ./server/src ./src
