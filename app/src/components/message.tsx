@@ -232,11 +232,10 @@ export default function MessageComponent(props: {
   share?: boolean;
 }) {
   const context = useAppContext();
-  const { key, play, setSourceElement } = useTTS();
+  const { lastPlayedKey, play, setSourceElement } = useTTS();
 
   const [editing, setEditing] = useState(false);
   const [content, setContent] = useState('');
-  const [lastPlayId, setLastPlayId] = useState('');
   const intl = useIntl();
 
   const [katex] = useOption<boolean>('markdown', 'katex');
@@ -287,9 +286,9 @@ export default function MessageComponent(props: {
     [
       'r',
       () => {
-        if (key) {
+        if (lastPlayedKey) {
           setSourceElement(
-            key,
+            lastPlayedKey,
             document.querySelector('.content-' + props.message.id)!
           );
           play();

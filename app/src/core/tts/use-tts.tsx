@@ -43,6 +43,7 @@ function extractTextSegments(element: HTMLElement) {
 
 interface ITTSContext {
   key: string | null;
+  lastPlayedKey: string | null;
   voice: Voice | null;
   autoplayEnabled: boolean;
   state?: TTSPlayerState;
@@ -79,6 +80,7 @@ export function useTTSPlayerState(): ITTSContext {
   const elementRef = useRef<HTMLElement | null>(null);
 
   const [key, setKey] = useState<string | null>(null);
+  const [lastPlayedKey, setLastPlayedKey] = useState<string | null>(null);
   const [state, setState] = useState(() => player.current?.getState());
   const [complete, setComplete] = useState(false);
 
@@ -95,6 +97,7 @@ export function useTTSPlayerState(): ITTSContext {
       }
 
       setKey(newKey);
+      setLastPlayedKey(newKey);
 
       if (element) {
         if (!plugin.current) {
@@ -124,7 +127,7 @@ export function useTTSPlayerState(): ITTSContext {
   );
 
   useEffect(() => {
-    setSourceElement(key, null);
+    setSourceElement(null, null);
   }, [ttsPluginID, voiceID]);
 
   useEffect(() => {
@@ -147,6 +150,7 @@ export function useTTSPlayerState(): ITTSContext {
 
   return {
     key,
+    lastPlayedKey,
     voice: voiceID ? voice : null,
     autoplayEnabled,
     state: !state?.ended ? state : undefined,
@@ -166,6 +170,7 @@ export function useTTSPlayerState(): ITTSContext {
 
 const TTSContext = createContext<ITTSContext>({
   key: null,
+  lastPlayedKey:null,
   voice: null,
   autoplayEnabled: true,
   play() {},
