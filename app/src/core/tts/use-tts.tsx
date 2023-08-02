@@ -170,7 +170,7 @@ export function useTTSPlayerState(): ITTSContext {
 
 const TTSContext = createContext<ITTSContext>({
   key: null,
-  lastPlayedKey:null,
+  lastPlayedKey: null,
   voice: null,
   autoplayEnabled: true,
   play() {},
