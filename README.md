@@ -44,7 +44,7 @@ Your API key is stored only on your device and never transmitted to anyone excep
 ### To run on your own device, you can use Docker:
 
 ```
-docker run -v $(pwd)/data:/app/data -p 3000:3000 ghcr.io/cogentapps/chat-with-gpt:release
+docker run -v $(pwd)/data:/app/data -p 3000:3000 ghcr.io/lenonmax/chat-with-gpt:release
 ```
 
 Then navigate to http://localhost:3000 to view the app.
@@ -79,7 +79,7 @@ and restart the server. Login is required.
 ## Updating
 
 ```
-docker pull ghcr.io/cogentapps/chat-with-gpt:release
+docker pull ghcr.io/lenonmax/chat-with-gpt:release
 ```
 
 ## License
